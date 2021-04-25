@@ -27,7 +27,10 @@
 			& .projectInfo {
 				display: flex;
 				flex-direction: column;
-
+				width: 100%;
+				& > div {
+					width: 100%;
+				}
 				& .projectName {
 					font-size: 15px;
 					line-height: 120%;
