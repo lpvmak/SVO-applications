@@ -13,16 +13,18 @@ import moment from 'moment'
 import { applicationsAPI } from 'api'
 import { canApproveOrRefuse } from 'components/Applications/Applications/ApplicationsList'
 import locationIcon from '../../../assets/img/location-icon.png'
+import EditApplicationModal from '../../Common/Modals/EditApplicationModal'
+
 
 type PropsType = {
 	application: ApplicationType
 	approve: () => void
 	refuse: () => void
+	setNeedRefresh?: (need: boolean) => void
 }
 
-const Application = ({ application, approve, refuse, ...props }: PropsType) => {
+const Application = ({ application, approve, refuse, setNeedRefresh, ...props }: PropsType) => {
 	const [modalOpen, setModalOpen] = useState(false)
-
 
 
 	if (!application.id) {
@@ -47,8 +49,8 @@ const Application = ({ application, approve, refuse, ...props }: PropsType) => {
 
 
 					<p className={s.projectName} style={{ fontSize: 16 }}>{application.resource.title}</p>
-					<p className={s.projectName}>Start date: {moment(application.start_time).format('YYYY.MM.DD HH:mm')}</p>
 					<p className={s.projectName}>Parking place: {application.parking_place.code}</p>
+					<p className={s.projectName}>Start date: {moment(application.start_time).format('YYYY.MM.DD HH:mm')}</p>
 					<p className={s.projectName}>End date: {moment(application.end_time).format('YYYY.MM.DD HH:mm')}</p>
 				</div>
 			</div>
@@ -57,14 +59,25 @@ const Application = ({ application, approve, refuse, ...props }: PropsType) => {
 
 			{ canApproveOrRefuse(application.status) &&
 				<ButtonsHolder>
+					<SubmitRoundedButton onClick={() => setModalOpen(true)}>Edit</SubmitRoundedButton>
 					<SubmitRoundedButton onClick={approve}>Approve</SubmitRoundedButton>
 					<DismissSimpleButton onClick={refuse}>Refuse</DismissSimpleButton>
 				</ButtonsHolder>}
 
 
-
+			{modalOpen && <EditApplicationModal
+				application={application}
+				open={modalOpen}
+				handleClose={() => setModalOpen(false)}
+				submitFunction={() => {
+					if (setNeedRefresh) setNeedRefresh(true)
+				}}
+			/>}
 		</div>
 	)
 }
+
+
+
 
 export default Application;

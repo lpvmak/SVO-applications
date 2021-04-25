@@ -13,6 +13,10 @@ export const applicationsAPI = {
 	getApplication: (id: number): Promise<AxiosResponse<ApplicationType>> => {
 		return instance.get(`/airline/applications/${id}/`)
 	},
+	editApplication(application: ApplicationType) {
+		const { id, ...restApplication } = application
+		return instance.patch(`/dispatcher/applications/${id}/`, restApplication)
+	},
 	approveApplication: (id: number): Promise<AxiosResponse<undefined>> => {
 		return instance.get(`/airline/applications/${id}/approve/`)
 	},
