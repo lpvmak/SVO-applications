@@ -6,6 +6,7 @@ import s from './Header.module.scss'
 import userImg from '../../assets/img/user-img.png'
 import { HeaderMenu } from './HeaderMenu';
 import { useAppSelector } from 'types/redux/redux';
+import { Link } from 'react-router-dom';
 
 
 const Header = (props: any) => {
@@ -21,7 +22,7 @@ const Header = (props: any) => {
 	return (
 		<div className={s.headerHolder}>
 			<div className={s.header}>
-				<div className={s.title}>AIRLINE APPLICATION</div>
+				<Link to='/applications' className={s.title}>AIRLINE APPLICATION</Link>
 				<button className={s.userImg} onClick={handleClick}><img src={me.avatar} alt="user-img" /></button>
 			</div>
 

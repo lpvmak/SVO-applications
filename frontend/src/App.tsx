@@ -17,12 +17,11 @@ import Project from './components/Applications/Application/ApplicationContainer'
 const App = () => {
 	const is768 = useResolution(768)
 	const history = useHistory()
-	useAuth()
 	const logged = useAppSelector(state => state.me.logged)
 
+	useAuth()
+
 	useEffect(() => {
-		console.log(history.location.pathname)
-		console.log(logged)
 		if (logged && (history.location.pathname === '/' || history.location.pathname === '')) {
 			history.push("/applications")
 		}
